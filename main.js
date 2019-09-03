@@ -1,9 +1,9 @@
 const config = {
-  apiKey: "YOURAPIKEY",
-  devId: "YOURDEVID",
+  apiKey: "-LmfS7b2sCLOlJfVFpIe",
+  devId: "simpleid_main",
   authProviders: ['blockstack'], 
   storageProviders: ['blockstack', 'pinata'], 
-  appOrigin: "YOURAPPORIGIN", 
+  appOrigin: window.location.origin, 
   scopes: ['publish_data', 'store_write', 'email'] 
 }
 let startPage = "signup";
@@ -74,7 +74,7 @@ async function signUp(e) {
   const password = document.getElementById('password-signup').value;
   const email = document.getElementById('email-signup').value;
   pageLoad();
-  const data = `username=${username}&password=${password}&email=${email}&development=true&devId=imanewdeveloper`;        
+  const data = `username=${username}&password=${password}&email=${email}&development=false&devId=imanewdeveloper`;        
   const urlKeychain = "https://api.simpleid.xyz/keychain";
   const urlAppKeys = "https://api.simpleid.xyz/appkeys";
 
@@ -91,7 +91,7 @@ async function signUp(e) {
     // const url = encodeURIComponent(window.location.orign);
     const uriEncodedProfile = encodeURIComponent(JSON.stringify(profile))
     
-    const keyData = `username=${username}&password=${password}&profile=${uriEncodedProfile}&url=https%3A%2F%2Fthisisnew.com&development=true&devId=imanewdeveloper`
+    const keyData = `username=${username}&password=${password}&profile=${uriEncodedProfile}&url=https%3A%2F%2Fthisisnew.com&development=false&devId=imanewdeveloper`
     const userData = await postToApi(keyData, urlAppKeys);
     if(!userData.includes('ERROR')) {
       console.log(userData);
@@ -132,7 +132,7 @@ async function signIn(e) {
   //const url = encodeURIComponent(window.location.origin);
   const uriEncodedProfile = encodeURIComponent(JSON.stringify(profile))
   
-  const keyData = `username=${username}&password=${password}&profile=${uriEncodedProfile}&url=https%3A%2F%2Fthisisnew.com&development=true&devId=imanewdeveloper`
+  const keyData = `username=${username}&password=${password}&profile=${uriEncodedProfile}&url=https%3A%2F%2Fthisisnew.com&development=false&devId=imanewdeveloper`
   const userData = await postToApi(keyData, urlAppKeys);
   if(!userData.includes('ERROR')) {
     console.log(userData);
@@ -188,7 +188,7 @@ async function fetchCollection() {
   const username = JSON.parse(localStorage.getItem('user-session')).username;
   const notesId = "notesIndex";
   console.log(notesId);
-  const data = `username=${username}&devId=${config.devId}&devSuppliedIdentifier=${notesId}&development=true`;
+  const data = `username=${username}&devId=${config.devId}&devSuppliedIdentifier=${notesId}&development=false`;
   const pinnedContent = await postToApi(data, url);
   console.log(pinnedContent);
   if(!pinnedContent.includes("ERROR")) {
@@ -251,7 +251,7 @@ async function loadNote(id) {
   const url = "https://api.simpleid.xyz/fetchContent";
   const username = JSON.parse(localStorage.getItem('user-session')).username;
   const noteId = JSON.stringify(id);
-  const data = `username=${username}&devId=${config.devId}&devSuppliedIdentifier=${noteId}&development=true`;
+  const data = `username=${username}&devId=${config.devId}&devSuppliedIdentifier=${noteId}&development=false`;
 
   document.getElementById('notes-collection').style.display = "none";
   document.getElementById('single-note').style.display = "block";
@@ -304,7 +304,7 @@ async function saveNote() {
   const username = JSON.parse(localStorage.getItem('user-session')).username;
   const identifier = "notesIndex";
   const content = encodeURIComponent(JSON.stringify(encryptedContent));
-  const data = `username=${username}&devId=${config.devId}&devSuppliedIdentifier=${identifier}&contentToPin=${content}&development=true`;
+  const data = `username=${username}&devId=${config.devId}&devSuppliedIdentifier=${identifier}&contentToPin=${content}&development=false`;
   const postedContent = await postToApi(data, pinURL);
   if(!postedContent.includes("ERROR")) {
     console.log(postedContent);
@@ -312,7 +312,7 @@ async function saveNote() {
     const encryptedNote = encryptContent(JSON.stringify(note), privKey);
     const noteIdentifier = JSON.stringify(note.id);
     const saveNoteContent = encodeURIComponent(JSON.stringify(encryptedNote));
-    const noteData = `username=${username}&devId=${config.devId}&devSuppliedIdentifier=${noteIdentifier}&contentToPin=${saveNoteContent}&development=true`;
+    const noteData = `username=${username}&devId=${config.devId}&devSuppliedIdentifier=${noteIdentifier}&contentToPin=${saveNoteContent}&development=false`;
     const postedNote = await postToApi(noteData, pinURL);
     console.log(postedNote);
     if(!postedNote.includes("ERROR")) {
