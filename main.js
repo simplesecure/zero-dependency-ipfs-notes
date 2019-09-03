@@ -1,9 +1,9 @@
 const config = {
-  apiKey: "-LmfS7b2sCLOlJfVFpIe",
-  devId: "simpleid_main",
+  apiKey: "YOURAPIKEY",
+  devId: "YOURDEVID",
   authProviders: ['blockstack'], 
   storageProviders: ['blockstack', 'pinata'], 
-  appOrigin: window.location.origin, 
+  appOrigin: "YOURAPPURL", 
   scopes: ['publish_data', 'store_write', 'email'] 
 }
 let startPage = "signup";
