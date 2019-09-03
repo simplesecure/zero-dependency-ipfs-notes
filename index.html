@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+   <head>
+     <meta charset="UTF-8">
+     <link rel="stylesheet" type="text/css" href="style.css">
+     <title>IPFS Notes</title>
+   </head>
+   <body>
+      <div class="login-page" style="display: none;" id="signup-form">
+        <div class="form">
+          <form class="register-form" onsubmit="event.preventDefault()">
+            <input type="text" id="username-signup" placeholder="username" /><br/>
+            <input type="password" id="password-signup" placeholder="password" /><br/>
+            <input type="text" id="email-signup" placeholder="email" /><br/>     
+            <button onclick="signUp(event)" type="submit">Sign Up</button>
+            <p class="message">Already registered? <a onclick="changeForm('signin')" href="#">Sign In</a></p>
+          <form>
+        </div>
+      </div>
+
+      <div style="display: none;" id="signin-form">
+        <div class="login-page">
+          <div class="form">
+            <form class="login-form" onsubmit="event.preventDefault()">
+              <input type="text" id="username-signin" placeholder="username" /><br/>
+              <input type="password" id="password-signin" placeholder="password" /><br/>
+              <button onclick="signIn(event)" type="submit">Sign In</button>
+              <p class="message">Not registered? <a onclick="changeForm('signup')" href="#">Create an account</a></p>
+            <form>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: none" id="loading">
+        <h1>Loading...</h1>
+      </div>
+
+      <div style="display: none" id="root-app">
+        <button onclick="signOut()">Sign Out</button>
+        <div id="notes-collection">
+          <h3 id="no-content"></h3>
+          <div>
+            <h3 id="notes-total"></h3>
+            <button onclick="newNote()" class="floating top" id="create-note">New Note</button>
+          </div>
+          <div id="notes-collection-items"></div>
+        </div>
+        <div style="display: none;" id="single-note">
+          <button class="floating top" onclick="closeNote()">Close</button>
+          <div id="note-title-div">
+            <input type="text" id="note-title" placeholder="note title" />
+          </div>
+          <ul id="toolbar">
+            <li onmousedown="event.preventDefault()" onclick="document.execCommand('bold', false, null)"><button class="dark-btn">Bold</button></li>
+            <li onmousedown="event.preventDefault()" onclick="document.execCommand('italic', false, null)"><button class="dark-btn">Italics</button></li>
+            <li onmousedown="event.preventDefault()" onclick="document.execCommand('underline', false, null)"><button class="dark-btn">Underline</button></li>
+            <li onclick="saveNote()"><button class="blue-btn">Save Note</button></li>
+          </ul>
+          <div id="note" contenteditable="true"></div>
+        </div>
+      </div>
+
+    <script type="application/javascript" src="main.js"></script>
+   </body>
+</html>
