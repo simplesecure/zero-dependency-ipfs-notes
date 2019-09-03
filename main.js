@@ -1,9 +1,10 @@
+const devConfig = require('./config.json');
 const config = {
-  apiKey: "YOURAPIKEY",
-  devId: "YOURDEVID",
+  apiKey: devConfig.apiKey,
+  devId: devConfig.devId,
   authProviders: ['blockstack'], 
   storageProviders: ['blockstack', 'pinata'], 
-  appOrigin: "YOURAPPURL", 
+  appOrigin: window.location.origin, 
   scopes: ['publish_data', 'store_write', 'email'] 
 }
 let startPage = "signup";
@@ -74,7 +75,7 @@ async function signUp(e) {
   const password = document.getElementById('password-signup').value;
   const email = document.getElementById('email-signup').value;
   pageLoad();
-  const data = `username=${username}&password=${password}&email=${email}&development=false&devId=imanewdeveloper`;        
+  const data = `username=${username}&password=${password}&email=${email}&development=false&devId=${config.devId}`;        
   const urlKeychain = "https://api.simpleid.xyz/keychain";
   const urlAppKeys = "https://api.simpleid.xyz/appkeys";
 
@@ -91,7 +92,7 @@ async function signUp(e) {
     // const url = encodeURIComponent(window.location.orign);
     const uriEncodedProfile = encodeURIComponent(JSON.stringify(profile))
     
-    const keyData = `username=${username}&password=${password}&profile=${uriEncodedProfile}&url=https%3A%2F%2Fthisisnew.com&development=false&devId=imanewdeveloper`
+    const keyData = `username=${username}&password=${password}&profile=${uriEncodedProfile}&url=https%3A%2F%2Fthisisnew.com&development=false&devId=${config.devId}`
     const userData = await postToApi(keyData, urlAppKeys);
     if(!userData.includes('ERROR')) {
       console.log(userData);
@@ -132,7 +133,7 @@ async function signIn(e) {
   //const url = encodeURIComponent(window.location.origin);
   const uriEncodedProfile = encodeURIComponent(JSON.stringify(profile))
   
-  const keyData = `username=${username}&password=${password}&profile=${uriEncodedProfile}&url=https%3A%2F%2Fthisisnew.com&development=false&devId=imanewdeveloper`
+  const keyData = `username=${username}&password=${password}&profile=${uriEncodedProfile}&url=https%3A%2F%2Fthisisnew.com&development=false&devId=${config.devId}`
   const userData = await postToApi(keyData, urlAppKeys);
   if(!userData.includes('ERROR')) {
     console.log(userData);
@@ -170,10 +171,8 @@ function postToApi(data, url) {
 
     xhr.open("POST", url);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.setRequestHeader("Authorization", "-LmCb96-TquOlN37LpM0");
-    xhr.setRequestHeader("Accept", "*/*");
-    xhr.setRequestHeader("Cache-Control", "no-cache");
-    xhr.setRequestHeader("Host", "api.simpleid.xyz");
+    xhr.setRequestHeader("Authorization", config.apiKey);
+    xhr.withCredentials = false;
 
     xhr.send(data);
   })
